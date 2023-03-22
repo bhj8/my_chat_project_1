@@ -13,13 +13,6 @@ def get_env_variable(var_name):
         exit()
     return value
 
-DAVINCI_TOKEN = get_env_variable("DAVINCI_TOKEN") #我的机器人的token
-
-SERVER_ID = get_env_variable("SERVER_ID") #服务器id
-
-SALAI_TOKEN = get_env_variable("SALAI_TOKEN")#salai机器人的token,也就是我的md 的api token
-
-CHANNEL_IDS = eval(get_env_variable("CHANNEL_IDS"))#频道id #非必填 #到时候搞个数组扔进去好了
 
 APPID = get_env_variable("MY_WEROBOT_APPID")
 APPSECRET = get_env_variable("MY_WEROBOT_APPSECRET")
