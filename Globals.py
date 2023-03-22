@@ -1,0 +1,36 @@
+#strings
+import os
+import sys
+
+import dotenv
+
+dotenv.load_dotenv()
+
+def get_env_variable(var_name):
+    value = os.getenv(var_name)
+    if not value or value == "":
+        print(f"错误：又尼玛的狗日的没设置环境变量是不是？？？？",var_name)
+        exit()
+    return value
+
+DAVINCI_TOKEN = get_env_variable("DAVINCI_TOKEN") #我的机器人的token
+
+SERVER_ID = get_env_variable("SERVER_ID") #服务器id
+
+SALAI_TOKEN = get_env_variable("SALAI_TOKEN")#salai机器人的token,也就是我的md 的api token
+
+CHANNEL_IDS = eval(get_env_variable("CHANNEL_IDS"))#频道id #非必填 #到时候搞个数组扔进去好了
+
+APPID = get_env_variable("MY_WEROBOT_APPID")
+APPSECRET = get_env_variable("MY_WEROBOT_APPSECRET")
+TOKEN=get_env_variable("MY_WEROBOT_TOKEN")
+AES_KEY=get_env_variable('MY_ENCODING_AES_KEY')
+
+oPENAI_API_KEY = get_env_variable("OPENAI_API_KEY")
+#boolean
+USE_MESSAGED_CHANNEL = True
+
+#don't edit the following variable
+MID_JOURNEY_ID = "936929561302675456"  #midjourney bot id
+targetID       = ""
+targetHash     = ""
