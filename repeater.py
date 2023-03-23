@@ -59,9 +59,17 @@ async def on_message():
         print("\r" + e)
 
 
-async def start():
-    for _ in range(30):
-        asyncio.create_task(on_message())
+pool = ThreadPoolExecutor(max_workers=10, thread_name_prefix="on_message")
+pool.submit(asyncio.run, on_message())
+pool.submit(asyncio.run, on_message())
+pool.submit(asyncio.run, on_message())
+pool.submit(asyncio.run, on_message())
+pool.submit(asyncio.run, on_message())
+pool.submit(asyncio.run, on_message())
+pool.submit(asyncio.run, on_message())
+pool.submit(asyncio.run, on_message())
+pool.submit(asyncio.run, on_message())
+pool.submit(asyncio.run, on_message())
 
 
 def get_response(msg,dic) -> None:
