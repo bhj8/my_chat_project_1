@@ -55,7 +55,7 @@ async def on_message():
             (msg,dic) = queue.get()
             while True:
                 try:
-                    await asyncio.wait_for(deal_message(msg, dic), 3)
+                    await asyncio.wait_for(deal_message(msg, dic), 8)
                     break  # 跳出内层循环，回到处理下一条消息
                 except asyncio.TimeoutError:
                     print("处理消息超时，将再次尝试。")
