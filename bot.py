@@ -25,8 +25,8 @@ robot.config['APP_ID'] = AppID
 robot.config['APP_SECRET'] = AppSecret
 robot.config['ENCODING_AES_KEY'] = aes_key
 client = robot.client
-disclass_thread = threading.Thread(target=run_disclass, daemon=True)
-disclass_thread.start()
+# disclass_thread = threading.Thread(target=run_disclass, daemon=True)
+# disclass_thread.start()
 
 sql = robot.session_storage#实例化数据库  openai：1."score"积分2."freescore"每日免费积分 3."inrmb"总充值金额 4."friendkey"邀请码 5."chats"总聊天次数 6."paints"总画画次数 7."all_invite"总邀请次数 8."already_invited" 已经被邀请 9."alredy_gift_key" 一个dic，已经使用的礼品码
 #key 的 1."user_id" 用户id  2."count" 这个key成功邀请的次数
@@ -34,10 +34,10 @@ sql = robot.session_storage#实例化数据库  openai：1."score"积分2."frees
 
 
 set_client(client)
-set_sql(sql)
-# @robot.handler
-# def hello(message):
-#     return message.content
+# set_sql(sql)
+# # @robot.handler
+# # def hello(message):
+# #     return message.content
 
 
 #并发限制
@@ -56,53 +56,53 @@ user_chats = {}
 #为img2img专门服务的聊天记录储存
 user_chats_img2img = {}
 
-#封装对sql的操作
-def sql_update(id,dic):
-    a = sql.get(id)
-    a.update(dic)
-    sql.set(id,a)
-def sql_del(id,dic):
-    a = sql.get(id)
-    for key in dic :
-        a.pop(key,None)    
-    sql.set(id,a)
-def sql_get(id):
-    a = sql.get(id)
-        # raise ValueError(f"在get sql数据库时发现了异常，没有get到{id}值")
-    return a
+# #封装对sql的操作
+# def sql_update(id,dic):
+#     a = sql.get(id)
+#     a.update(dic)
+#     sql.set(id,a)
+# def sql_del(id,dic):
+#     a = sql.get(id)
+#     for key in dic :
+#         a.pop(key,None)    
+#     sql.set(id,a)
+# def sql_get(id):
+#     a = sql.get(id)
+#         # raise ValueError(f"在get sql数据库时发现了异常，没有get到{id}值")
+#     return a
         
 
-#设置新用户的sql
-def set_newuser_sql(message):
-    dic = sql_get(message.source)
-    fkey = utils.get_friendkey(message.source)
-    dic['friendkey'] = fkey #先绑定一个邀请码
-    if not 'score' in dic:
-        dic['score'] = price.new_user#就这里预设了新用户的积分
-    if not 'freescore' in dic:
-        dic['freescore'] = 0
-    if not 'inrmb' in dic:
-        dic['inrmb'] = 0
-    if not 'chats' in dic:
-        dic['chats'] = 0
-    if not 'paints' in dic:
-        dic['paints'] = 0
-    if not 'all_invite' in dic:
-        dic['all_invite'] = 0
-    if not 'already_invited' in dic:
-        dic['already_invited'] = 0
-    if not 'alredy_gift_key' in dic:
-        dic['alredy_gift_key'] = {}
-    sql_update(message.source,dic)
-    sql_update(fkey,{"user_id":message.source})
-    if  "count" not in  sql_get(fkey):
-        sql_update(fkey,{"count":0})    
-    print(message.source,"new user",dic)
-#设置邀请码的sql
-def set_invite_sql(user_id):
-    sql_update(user_id,{"all_invite":sql_get(user_id)["all_invite"]+1})
-    sql_update(user_id,{"score":sql_get(user_id)["score"]+price.invite_user})
-    pass
+# #设置新用户的sql
+# def set_newuser_sql(message):
+#     dic = sql_get(message.source)
+#     fkey = utils.get_friendkey(message.source)
+#     dic['friendkey'] = fkey #先绑定一个邀请码
+#     if not 'score' in dic:
+#         dic['score'] = price.new_user#就这里预设了新用户的积分
+#     if not 'freescore' in dic:
+#         dic['freescore'] = 0
+#     if not 'inrmb' in dic:
+#         dic['inrmb'] = 0
+#     if not 'chats' in dic:
+#         dic['chats'] = 0
+#     if not 'paints' in dic:
+#         dic['paints'] = 0
+#     if not 'all_invite' in dic:
+#         dic['all_invite'] = 0
+#     if not 'already_invited' in dic:
+#         dic['already_invited'] = 0
+#     if not 'alredy_gift_key' in dic:
+#         dic['alredy_gift_key'] = {}
+#     sql_update(message.source,dic)
+#     sql_update(fkey,{"user_id":message.source})
+#     if  "count" not in  sql_get(fkey):
+#         sql_update(fkey,{"count":0})    
+#     print(message.source,"new user",dic)
+# #设置邀请码的sql
+# def set_invite_sql(user_id):
+#     sql_update(user_id,{"all_invite":sql_get(user_id)["all_invite"]+1})
+#     sql_update(user_id,{"score":sql_get(user_id)["score"]+price.invite_user})
+#     pass
 
 
 # @robot.filter("示例")
@@ -132,29 +132,29 @@ def set_invite_sql(user_id):
 # 输入"价格"查看积分定价"""#(每日6点重置为{price.daily_user}
 
 
-@robot.filter("价格")
+@robot.filter("全文")
 def show_price(message):
-    return mytxt.pricetxt
+    return mytxt.welcometxt
 
-# sql_update("id",{"score":100,"freescore":100})
-# a = sql_get("id")['score']
-# print(a)
-@robot.filter("帮助")
-def show_help(message):
-    return  mytxt.help_txt
+# # sql_update("id",{"score":100,"freescore":100})
+# # a = sql_get("id")['score']
+# # print(a)
+# @robot.filter("帮助")
+# def show_help(message):
+#     return  mytxt.help_txt
 
-@robot.filter("邀请码")
-def show_invite(message):
-    set_newuser_sql(message)
-    client.send_text_message(message.source,mytxt.invite_txt)
-    return f"{sql_get(message.source)['friendkey']}"
+# @robot.filter("邀请码")
+# def show_invite(message):
+#     set_newuser_sql(message)
+#     client.send_text_message(message.source,mytxt.invite_txt)
+#     return f"{sql_get(message.source)['friendkey']}"
 
 
-#新用户关注
-@robot.subscribe
-def subscribe(message):
-    set_newuser_sql(message)
-    return mytxt.newusertxt
+# #新用户关注
+# @robot.subscribe
+# def subscribe(message):
+#     set_newuser_sql(message)
+#     return mytxt.newusertxt
 
 
 @robot.voice #语音转文字后发送到文字处理函数
@@ -307,68 +307,23 @@ def hello_world(message):
 # @robot.handler#意外处理函数
 # def echo(message):
 #     return mytxt.unexpected_txt
-# #自定义菜单
-# def init_menu():
-#     client.create_menu({
-#         "button": [
-#             {
-#                 "type": "click",
-#                 "name": "点左边",
-#                 "key": "left_click"
-#             },
-#             {
-#                 "name": "功能说明",
-#                 "sub_button": [
-#                     {
-#                         "type": "click",
-#                         "name": "照片转换",
-#                         "key": "img2img_click"
-#                     },
-#                     {
-#                         "type": "click",
-#                         "name": "题词画图",
-#                         "key": "paint_click"
-#                     },
-#                     {
-#                         "type": "click",
-#                         "name": "聊天问答",
-#                         "key": "chat_click"
-#                     },
-#                 ]
-#             },
-#             {
-#                 "name": "帮助积分",
-#                 "sub_button": [
-#                     {
-#                         "type": "click",
-#                         "name": "关于小慧",
-#                         "key": "about_click"
-#                     },
-#                     {
-#                         "type": "click",
-#                         "name": "邀请码",
-#                         "key": "invite_click"
-#                     },
-#                     {
-#                         "type": "click",
-#                         "name": "积分定价",
-#                         "key": "price_click"
-#                     },
-#                     {
-#                         "type": "click",
-#                         "name": "积分查询",
-#                         "key": "score_click"
-#                     },
-#                 ]
-#             },
-#         ]
-#     })
+#自定义菜单
+def init_menu():
+    client.create_menu({
+        "button": [
+            {
+                "type": "click",
+                "name": "说明",
+                "key": "left_click"
+            },
+        ]
+    })
 
-# init_menu()
-# @robot.click
-# def abort(message):
-#     if message.key == "left_click":
-#         return mytxt.left_txt
+init_menu()
+@robot.click
+def abort(message):
+    if message.key == "left_click":
+        return mytxt.welcometxt
 #     elif message.key == "chat_click":
 #         return mytxt.chat_txt
 #     elif message.key == "paint_click":
