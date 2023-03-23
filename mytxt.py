@@ -4,7 +4,8 @@ from price import price
 class mytxt	 :
     #示例
     welcometxt = """公司最近下发了“员工自购办公笔记本，公司按月补贴”通知。
-<a href="weixin://bizmsgmenu?msgmenucontent=全文&msgmenuid=1">您可以点击这里查看全文</a>有任何问题都可以问我。"""
+<a href="weixin://bizmsgmenu?msgmenucontent=全文&msgmenuid=1">您可以点击这里查看全文</a>
+有任何问题都可以问我。"""
     #全文
     all_txt= """电竞业务事业部试点“员工自购办公笔记本，公司按月补贴”的制度，补贴3000元、5000元、7000元、10000元共四档。员工申请笔记本补贴后，不可再向公司额外申请电脑。
 以下是详细说明：
