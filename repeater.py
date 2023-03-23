@@ -53,7 +53,10 @@ async def on_message():
     try:
         while True:
             (msg,dic) = queue.get()
-            await asyncio.wait_for(deal_message(msg,dic),8)
+            try:
+                await asyncio.wait_for(deal_message(msg, dic), timeout=5)
+            except asyncio.TimeoutError:
+                continue  # continue execution even after timeout
     except Exception as e:
         client.send_text_message(msg.source, "很抱歉，因网络延迟问题。答案生成失败，请您再次发送问题。")
         print("\r" + e)
