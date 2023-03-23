@@ -14,7 +14,7 @@ from openai_api import *
 from price import price
 from Utils import utils
 
-queue = asyncio.Queue()
+queue = Queue()
 
 def set_client(c):
     global client
