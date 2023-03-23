@@ -134,7 +134,7 @@ user_chats_img2img = {}
 
 @robot.filter("全文")
 def show_price(message):
-    return mytxt.welcometxt
+    return mytxt.all_txt
 
 # # sql_update("id",{"score":100,"freescore":100})
 # # a = sql_get("id")['score']
